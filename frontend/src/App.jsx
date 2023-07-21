@@ -1,20 +1,21 @@
 import React from "react";
-import { Elements } from "@stripe/react-stripe-js";
-import { loadStripe } from "@stripe/stripe-js";
-import PaymentForm from "./PaymentForm";
-
-const stripePromise = loadStripe(
-  "pk_test_51N8eOaSBMLlszcWaZ3hbLqSCSuj0bccPBzWaJicaRhrEbUhUdHLmsFAmgCCgLwgMwfj4jQ6CKY5RKBUFCHRB8Ww800MMrJiICE"
-);
+import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
+import { Home } from "./Layouts/home";
+import { Success } from "./Layouts/Success";
+import { Error } from "./Layouts/Error";
 
 const App = () => {
   return (
-    <div className="App">
-      <h1>My Stripe App</h1>
-      <Elements stripe={stripePromise}>
-        <PaymentForm />
-      </Elements>
-    </div>
+    <BrowserRouter>
+      <Switch>
+        <Route exact path="/" component={Home} />
+        <Route path="/home">
+          <Redirect to="/" />
+        </Route>
+        <Route path="/success" component={Success} />
+        <Route path="/*" component={Error} />
+      </Switch>
+    </BrowserRouter>
   );
 };
 
